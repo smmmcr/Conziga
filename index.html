@@ -1,0 +1,116 @@
+<!DOCTYPE html><!--HTML5 doctype-->
+<html>
+    <head>
+        <title>Powered by Movil Multimedia</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <style>
+            
+        </style>
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.3.2.min.css">
+        <link rel="stylesheet" type="text/css" href="themes/conziga.min.css">
+	 	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+	   	<script type="text/javascript" charset="utf-8" src="libs/database.js"></script>
+		<script type="text/javascript" charset="utf-8" src="libs/geogra.js"></script>  
+		<script type="text/javascript" charset="utf-8" src="libs/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="libs/swipe.js"></script>
+        <script type="text/javascript" charset="utf-8" src="libs/funciones.js"></script>
+        <script type="text/javascript" charset="utf-8" src="libs/jquery.mobile-1.3.1.min.js"></script>  
+    </head>
+    <body>
+    <!-- LOGIN -->
+    <div data-role="page" id="login" data-theme="a">
+	    <div data-role="content">
+	    <form class="login_box">
+	    	<img src="images/logo.png" class="logo" />
+			<label for="username" class="ui-hidden-accessible">Usuario:</label>
+			<input type="text" name="username" id="username" value="" placeholder="Usuario"/>
+			<label for="password" class="ui-hidden-accessible">Contraseña:</label>
+			<input type="password" name="password" id="password" value="" placeholder="Contraseña"/>
+			<input type="checkbox" data-mini="true" name="checkbox-agree" id="checkbox-agree" class="custom" />
+	   		<label for="checkbox-agree">Recordar contraseña</label>
+			<input type="submit" value="Ingresar" />
+			<span class="error">Error: Usuario o contraseña no válido.</span>
+	   	</form>
+	   	</div>
+    </div>
+    <!-- HOME -->
+    <div data-role="page" id="home" data-theme="a">
+    <div class="preloader ui-body-a"></div>
+    <div class="header" data-role="header" data-position="fixed">
+    <img src="images/logo.png" class="logo" />
+    <a href="#login" data-icon="delete">Salir</a>
+    </div>
+    	<div data-role="content">
+    	<div id='slider' class='swipe'>
+		  <div class='swipe-wrap'>
+		  </div>
+		</div>
+    	<div class="mainmenu">
+    		<button data-corners="false" data-theme="b" data-url="#top_ofertas">¿Qué viene?</button>
+    		<button data-corners="false" data-theme="b" data-url="#compras">Mis compras</button>
+    		<button data-corners="false" data-theme="b" data-url="#share">Compartir con tus amigos</button>
+    	</div>	
+    		<button id="gotoSite" data-corners="false" data-theme="a">Acceso directo al sitio móvil</button>
+    	</div>
+    </div>
+    
+    <!-- TOP OFERTAS -->
+    <div data-role="page" id="top_ofertas" data-theme="a">
+    <div class="header" data-role="header" data-position="fixed">
+    <a href="#" data-rel="back" data-icon="back">Volver</a>
+    <img src="images/logo.png" class="logo" />
+    <a href="#login" data-icon="delete">Salir</a>
+    </div>
+    	<div data-role="content">
+		<h1>Ofertas</h1>
+		<p>Proximamente nuevos productos. ConZiga - El poder de muchos!</p>
+		<ul data-role="listview" data-inset="true" data-theme="b"></ul>
+    	</div>
+    </div>
+    <!-- COMPRAS -->
+    <div data-role="page" id="compras" data-theme="a">
+    <div class="header" data-role="header" data-position="fixed">
+    <a href="#" data-rel="back" data-icon="back">Volver</a>
+    <img src="images/logo.png" class="logo" />
+    <a href="#login" data-icon="delete">Salir</a>
+    </div>
+    	<div data-role="content">
+    	<h1>Mis Compras</h1>
+			<ul data-role="listview" data-inset="true" data-theme="b">
+			   
+			</ul>
+    	</div>
+    </div>
+    <!-- SHARE -->
+    <div data-role="page" id="share" data-theme="a">
+    <div class="header" data-role="header" data-position="fixed">
+    <a href="#" data-rel="back" data-icon="back">Volver</a>
+    <img src="images/logo.png" class="logo" />
+    <a href="#login" data-icon="delete">Salir</a>
+    </div>
+    	<div data-role="content">
+    	<h1>Compartir</h1>
+            <ul data-role="listview" data-inset="true" data-theme="b">
+               
+            </ul>        
+    	</div>   
+    </div>
+    <!-- DETALLE -->
+    <div data-role="page" id="detalle" data-theme="a">
+    <div class="header" data-role="header" data-position="fixed">
+    <a href="#" data-rel="back" data-icon="back">Volver</a>
+    <img src="images/logo.png" class="logo" />
+    <a href="#login" data-icon="delete">Salir</a>
+    </div>
+    	<div data-role="content">
+    	<h1></h1>
+    	<div class="banner" data-inset="true"></div>
+    	<ul data-role="listview" data-inset="true" data-theme="b">
+    	</ul>
+    	</div>
+    </div>     
+    </body>
+</html>
