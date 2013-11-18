@@ -1,27 +1,7 @@
-document.addEventListener("deviceready", onDeviceReady, false);
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-        
-    }
-
-$(document).on("mobileinit", function(){
-	$.mobile.defaultPageTransition = 'none';
-});
-
-function preloader(){
-	$.mobile.loading( 'show', {
-		text: 'Espere por favor...',
-		textVisible: true,
-		theme: 'b',
-		html: ""
-	});
-}
 var idOrden;
 sessionStorage.authUser;
 
-$(function(){
-	$( "#home" ).on( "pagebeforecreate", function( event ) {
+	$( "#home" ).on( "pagebeforecreate", function() {
 		$.getJSON('http://conziga.com/DataMobile/GetIndex/?callback=?', function(data) {
 			preloader();
 			$.each(data, function(key, item) {
@@ -52,6 +32,7 @@ $(function(){
 			salir = confirm('¿Desea cerrar la sesión?');
 			if (salir){
 					sessionStorage.authUser = false;
+					navigator.app.clearHistory();
 					$.mobile.changePage("#login");
 				}else{
 					$.mobile.changePage("#home");
@@ -59,9 +40,9 @@ $(function(){
 		}
 	});	
 	
-	$( "#compras" ).on( "pagebeforecreate", function( event ) {
+	$( "#compras" ).on( "pagecreate", function() {
 		  $.getJSON('http://sandbox.conziga.com/DataMobile/GetUserItems/?callback=?', function(data) {
-			  preloader();
+		  	preloader();
 			  	if (data == null || data=="fail"){
 			  		alert('No haz hecho ninguna compra');
 			  		$.mobile.changePage("#home");
@@ -74,19 +55,16 @@ $(function(){
 			  		$.each(data, function(key, item) {
 			  			userdata = '<li><a href="#detalle" data-value="'+item.idOrden+'"><img src="'+urlimg+item.miniatura+'"><h2>'+item.producto+'</h2><p>#Orden: '+item.idOrden+'</p></a></li>';
 			  			$('#compras ul').append(userdata).listview( "refresh" );
-					},
-		  				setTimeout(function(){
-		  					$.mobile.loading( "hide" )
-		  				},500)
-					);
+					});
 			  	}
-			});
+			hidePreloader();
+		});
 		});
 
 
-	$( "#share" ).on( "pagebeforecreate", function( event ) {
+	$( "#share" ).on( "pagecreate",function() {
 		  $.getJSON('http://conziga.com/DataMobile/GetIndex/?callback=?', function(data) {
-			  preloader();
+		  	preloader();
 			  		$('#share ul').empty();
 			  		urlimg = 'https://conziga.com/assets/images/productos/banners/';
 			  		$.each(data, function(key, item) {
@@ -94,18 +72,16 @@ $(function(){
 			  			userdata = '<li><a href="'+mailto+'"><img src="'+urlimg+item.imagenDestacada+'"><h2>'+item.nombre+' '+item.marca+' '+item.modelo+'</h2></a></li>';
 			  			$('#share ul').append(userdata).listview( "refresh" );
 					});	
+			hidePreloader();
 			});
-			$.mobile.loading( "hide" );
 		});
 	
-	$( "#top_ofertas" ).on( "pagebeforeshow", function( event ) {
-		preloader();
-	});
-	$( "#top_ofertas" ).on( "pagebeforecreate", function( event ) {
+	$( "#top_ofertas" ).on( "pagecreate", function() {
 		  $.getJSON('http://sandbox.conziga.com/DataMobile/GetProx/?callback=?', function(data) {
+		  preloader();
 			  	if (data == null || data=="null"){
-			  		//alert('No haz hecho ninguna compra');
-			  		//$.mobile.changePage("#home");
+			  		alert('Aún no haz hecho ninguna compra');
+			  		$.mobile.changePage("#home");
 			  	}else if(data == "no_logged"){
 			  		sessionStorage.authUser = false;
 			  		$.mobile.changePage("#login");
@@ -117,9 +93,8 @@ $(function(){
 			  			$('#top_ofertas ul').append(userdata).listview( "refresh" );
 					});
 			  	}
-			},
-			$.mobile.loading( "hide" )
-		  );
+		  hidePreloader();
+		  });
 		});	
 		
 $('form.login_box input, form.login_box select').keypress(function(event) { return event.keyCode != 13; });
@@ -166,7 +141,7 @@ $("form.login_box input[type='submit']").bind('tap',function(event){
 			 window.open('http://m.conziga.com', '_system');
 		 });
 	  
-		$("#compras").on("tap", ".ui-link-inherit", function(event) {
+		$("#compras").on("tap", ".ui-link-inherit", function(event) {	
 			event.preventDefault();
 			idOrden = $(this).attr('data-value');
 			preloader();
@@ -187,47 +162,19 @@ $("form.login_box input[type='submit']").bind('tap',function(event){
 					$.mobile.changePage("#detalle");
 			});
 		});
-		$("#detalle").on('pagebeforeshow', function (event, data) {
+		$("#detalle").on('pagebeforeshow', function () {
 			setTimeout(function(){
 					$('#detalle ul').listview( "refresh" );
 			},100);
 		});
 		
-});
+
 
 function GoToProd(id){
 	preloader();
 	window.open('http://m.conziga.com/detalle.php?id='+id+'', '_system');
 }
 
-function PopulateGeograp(){
-	$.each(provincias, function(key,item) {
-		$('#provincia').append('<option value="'+key+'">'+item+'</option>');
-	});
-	$.each(cantones[0], function(key,item) {
-		$('#canton').append('<option value="'+key+'">'+item+'</option>');
-	});	
-	$.each(distritos[0][0], function(key,item) {
-		$('#distrito').append('<option value="'+key+'">'+item+'</option>');
-	});
-}
-
-function CambiaCanton(prov){
-	$('#canton').empty();
-	$.each(cantones[prov], function(key,item) {
-		$('#canton').append('<option value="'+key+'">'+item+'</option>');
-	});	
-	$('#canton').selectmenu('refresh', true);
-	var cant = $('#canton').val();
-	CambiaDistrito(cant,prov);
-}
-function CambiaDistrito(cant,prov){
-	$('#distrito').empty();
-	$.each(distritos[prov][cant], function(key,item) {
-		$('#distrito').append('<option value="'+key+'">'+item+'</option>');
-	});	
-	$('#distrito').selectmenu('refresh', true);
-}
 function fail(error) {
     console.log(error.code);
 }
