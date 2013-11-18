@@ -1,10 +1,15 @@
 $(document).on("mobileinit", function(){
 	$.mobile.defaultPageTransition = 'none';
 });
-if(navigator.network && navigator.network.connection.type == Connection.NONE){
-	alert('Por favor verifique su conexión de internet e intente nuevamente');
-	navigator.app.exitApp();
-}
+document.addEventListener("deviceready", onDeviceReady, false);
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+	    if(navigator.network && navigator.network.connection.type == Connection.NONE){
+			alert('Por favor verifique su conexión de internet e intente nuevamente');
+			navigator.app.exitApp();
+		}   
+    }
 function preloader(){
 	$.mobile.loading( 'show', {
 		text: 'Espere por favor...',
