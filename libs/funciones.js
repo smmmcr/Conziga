@@ -40,7 +40,7 @@ sessionStorage.authUser;
 		}
 	});	
 	
-	$( "#compras" ).on( "pagecreate", function() {
+	$( "#compras" ).on( "pagebeforeshow", function() {
 		  $.getJSON('https://conziga.com/DataMobile/GetUserItems/?callback=?', function(data) {
 		  	preloader();
 			  	if (data == null || data=="fail"){
@@ -106,7 +106,7 @@ $("form.login_box input[type='submit']").bind('tap',function(event){
 	$('span.error').css('display','none');
 	datos = $("form.login_box").serializeArray();
 	/*ENVIA DATOS A SERVIDOR*/
-	servURL = "https://conziga.com/DataMobile/Login/?";
+	servURL = "http://conziga.com/DataMobile/Login/?";
 	$.ajax({
 	    url: servURL+"callback=?",
 	    data: datos,
@@ -114,7 +114,7 @@ $("form.login_box input[type='submit']").bind('tap',function(event){
 	    crossDomain: true,
 	    dataType: 'jsonp',
 	    success: function (resp) {
-	        if (resp == 'success'){
+	        if (resp != 'error'){
 	        	sessionStorage.authUser = true;
 	        	$.mobile.changePage("#home");
 	        }else{
