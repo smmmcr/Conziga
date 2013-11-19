@@ -41,7 +41,7 @@ sessionStorage.authUser;
 	});	
 	
 	$( "#compras" ).on( "pagecreate", function() {
-		  $.getJSON('http://sandbox.conziga.com/DataMobile/GetUserItems/?callback=?', function(data) {
+		  $.getJSON('https://conziga.com/DataMobile/GetUserItems/?callback=?', function(data) {
 		  	preloader();
 			  	if (data == null || data=="fail"){
 			  		alert('No haz hecho ninguna compra');
@@ -63,7 +63,7 @@ sessionStorage.authUser;
 
 
 	$( "#share" ).on( "pagecreate",function() {
-		  $.getJSON('http://conziga.com/DataMobile/GetIndex/?callback=?', function(data) {
+		  $.getJSON('https://conziga.com/DataMobile/GetIndex/?callback=?', function(data) {
 		  	preloader();
 			  		$('#share ul').empty();
 			  		urlimg = 'https://conziga.com/assets/images/productos/banners/';
@@ -77,7 +77,7 @@ sessionStorage.authUser;
 		});
 	
 	$( "#top_ofertas" ).on( "pagecreate", function() {
-		  $.getJSON('http://sandbox.conziga.com/DataMobile/GetProx/?callback=?', function(data) {
+		  $.getJSON('https://conziga.com/DataMobile/GetProx/?callback=?', function(data) {
 		  preloader();
 			  	if (data == null || data=="null"){
 			  		alert('Aún no haz hecho ninguna compra');
@@ -106,7 +106,7 @@ $("form.login_box input[type='submit']").bind('tap',function(event){
 	$('span.error').css('display','none');
 	datos = $("form.login_box").serializeArray();
 	/*ENVIA DATOS A SERVIDOR*/
-	servURL = "http://sandbox.conziga.com/DataMobile/Login/?";
+	servURL = "https://conziga.com/DataMobile/Login/?";
 	$.ajax({
 	    url: servURL+"callback=?",
 	    data: datos,
@@ -145,7 +145,7 @@ $("form.login_box input[type='submit']").bind('tap',function(event){
 			event.preventDefault();
 			idOrden = $(this).attr('data-value');
 			preloader();
-			$.getJSON('http://sandbox.conziga.com/DataMobile/GetOrder/?id='+idOrden+'&callback=?', function(data) {
+			$.getJSON('https://conziga.com/DataMobile/GetOrder/?id='+idOrden+'&callback=?', function(data) {
 				item = data[0];
 					banner = '<img src="'+urlimg+item.miniatura+'"/>';
 					userdata = '<li data-role="list-divider">#Orden:</li><li>'+item.idOrden+'</li>';
